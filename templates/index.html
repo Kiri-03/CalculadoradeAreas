@@ -1,59 +1,100 @@
-<!-- templates/index.html (v1) -->
+<!-- templates/index.html (v2 mejorada con JS) -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Área del Cuadrado</title>
+  <title>Calculadora de Áreas</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 500px;
+      max-width: 600px;
       margin: 50px auto;
-      background: #f5f5f5;
+      background: #f9f9f9;
       padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      border-radius: 10px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
     }
     h1 {
       text-align: center;
-      color: #333;
+      color: #222;
     }
-    label, input, button {
+    label, input, select, button {
       display: block;
       width: 100%;
-      margin-top: 10px;
+      margin-top: 15px;
     }
-    input, button {
+    input, select, button {
       padding: 10px;
       border-radius: 5px;
       border: 1px solid #ccc;
     }
     button {
-      background-color: #007bff;
+      background-color: #28a745;
       color: white;
       font-weight: bold;
       margin-top: 20px;
+      cursor: pointer;
     }
     .resultado {
       margin-top: 20px;
+      background: #e8ffe8;
       padding: 15px;
-      background: #e0ffe0;
       border: 1px solid #b2ffb2;
       border-radius: 5px;
     }
   </style>
 </head>
 <body>
-  <h1>Área del Cuadrado</h1>
+  <h1>Calculadora de Áreas</h1>
   <form method="post">
-    <label for="lado">Lado:</label>
-    <input type="number" name="lado" step="any" required>
+    <label for="figura">Figura:</label>
+    <select name="figura" id="figura" required>
+      <option value="">Selecciona una figura</option>
+      <option value="cuadrado">Cuadrado</option>
+      <option value="triangulo">Triángulo</option>
+    </select>
+
+    <div id="ladoField" style="display: none;">
+      <label for="lado">Lado:</label>
+      <input type="number" name="lado" step="any">
+    </div>
+
+    <div id="baseAlturaFields" style="display: none;">
+      <label for="base">Base:</label>
+      <input type="number" name="base" step="any">
+
+      <label for="altura">Altura:</label>
+      <input type="number" name="altura" step="any">
+    </div>
+
     <button type="submit">Calcular</button>
   </form>
+
   {% if resultado %}
     <div class="resultado">
       <strong>{{ resultado }}</strong>
     </div>
   {% endif %}
+
+  <script>
+    const figuraSelect = document.getElementById('figura');
+    const ladoField = document.getElementById('ladoField');
+    const baseAlturaFields = document.getElementById('baseAlturaFields');
+
+    figuraSelect.addEventListener('change', function () {
+      const selected = this.value;
+
+      if (selected === 'cuadrado') {
+        ladoField.style.display = 'block';
+        baseAlturaFields.style.display = 'none';
+      } else if (selected === 'triangulo') {
+        ladoField.style.display = 'none';
+        baseAlturaFields.style.display = 'block';
+      } else {
+        ladoField.style.display = 'none';
+        baseAlturaFields.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>
